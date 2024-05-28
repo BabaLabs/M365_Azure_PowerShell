@@ -1,0 +1,57 @@
+# Define the groups you want to search
+$groupNames = @("Group1", "Group2", "Group3")
+
+# Connect to Exchange Online
+Write-Host "Connecting to Exchange Online..."
+$UserCredential = Get-Credential
+Connect-ExchangeOnline -Credential $UserCredential
+
+# Initialize an array to hold users with blank "Office" field and their group info
+$results = @()
+
+foreach ($groupName in $groupNames) {
+    Write-Host "Processing group: $groupName..."
+
+    # Get the group
+    $group = Get-DistributionGroup -Identity $groupName
+
+    if ($group) {
+        # Get the members of the group
+        $members = Get-DistributionGroupMember -Identity $groupName
+
+        foreach ($member in $members) {
+            # Retrieve the user object to check the Office field
+            $user = Get-User -Identity $member.Alias
+
+            if ($user.Office -eq $null -or $user.Office -eq "") {
+                $results += [PSCustomObject]@{
+                    GroupName = $groupName
+                    DisplayName = $user.DisplayName
+                    UserPrincipalName = $user.UserPrincipalName
+                    Office = $user.Office
+                }
+            }
+        }
+    } else {
+        Write-Host "Group $groupName not found."
+    }
+}
+
+# Specify the CSV file path
+$csvFilePath = "C:\temp\UsersWithBlankOffice.csv"
+
+# Export the results to CSV
+Write-Host "Exporting results to CSV..."
+$results | Export-Csv -Path $csvFilePath -NoTypeInformation
+
+# Notify the user
+Write-Host "Process completed."
+Write-Host "Results have been exported to $csvFilePath"
+
+# Disconnect from Exchange Online
+Write-Host "Disconnecting from Exchange Online..."
+Disconnect-ExchangeOnline -Confirm:$false
+
+# Prompt to press enter to exit
+Write-Host "Press Enter to exit."
+[void][System.Console]::ReadLine()
