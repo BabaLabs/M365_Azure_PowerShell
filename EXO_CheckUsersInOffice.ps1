@@ -1,5 +1,7 @@
-#This script is used to show how many users are in a specific Office in O365/Exchange. Meant to be used for Senior Helpers
-#
+########################################################################################
+# This script is used to show how many users are in a specific Office in O365/Exchange #
+########################################################################################
+
 #Prompts User for O365 Admin credentials
 $AdminAccount = Read-Host "Please enter the O365 Admin email address"
 Write-Host "Please press Enter..."
@@ -8,7 +10,7 @@ Connect-ExchangeOnline -UserPrincipalName $AdminAccount
 
 #This prompts the user for the Office number they are checking on
 #It will list how many users are in that office, as well as list them all
-do {$TargetOffice = Read-Host "Please enter the Office number that you are checking on"`
+do {$TargetOffice = Read-Host "Please enter the Office that you are checking on"`
 
 Write-Host 'Press any key to continue...'; `
 $null = $Host.UI.RawUI.ReadKey('NoEcho,IncludeKeyDown');
