@@ -1,5 +1,5 @@
 #This script is used to assign a specific license to all users within a tenant
-#
+
 # Connect to Azure AD, prompts user for sign-in info
 Connect-AzureAD
 
