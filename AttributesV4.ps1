@@ -1,16 +1,29 @@
+# Connect to Azure Active Directory
 Connect-AzureAD
 
+# Retrieve all Azure AD users
 $Users = Get-AzureADUser -All $True
+
+# Initialize an array to store the results
 $Result = @()
 
+# Loop through each user in the Users collection
 for ($i=0; $i -lt $Users.Count; $i++) {
     $User = $Users[$i]
+
+    # Display a progress bar in the console
     Write-Progress -Activity "Processing Users" -Status "Processing $($User.DisplayName)" -PercentComplete (($i / $Users.Count) * 100)
 
+    # Get the manager's ObjectId for the current user
     $ManagerId = (Get-AzureADUserManager -ObjectId $User.ObjectId).ObjectId
+
+    # If the user has a manager, retrieve the manager's details
     $ManagerDetails = if($ManagerId) { Get-AzureADUser -ObjectId $ManagerId }
+
+    # Get the proxy addresses for the current user and join them into a single string
     $proxyAddresses = ($User | Select-Object -ExpandProperty ProxyAddresses) -join ", "
 
+    # Create a custom PSObject with the desired properties and add it to the results array
     $Result += New-Object PSObject -Property @{
         ObjectId = $User.ObjectId
         ObjectType = $User.ObjectType
@@ -37,7 +50,16 @@ for ($i=0; $i -lt $Users.Count; $i++) {
     }
 }
 
-$Result | Export-Csv -Path "C:\Temp\Attributes.csv" -NoTypeInformation
+# Specify the CSV file path
+$csvFilePath = "C:\Temp\Attributes.csv"
 
-# Pause at the end
+# Export the results array to a CSV file
+$Result | Export-Csv -Path $csvFilePath -NoTypeInformation
+
+# Notify the user that the process is complete and the file location
+Write-Host "Process completed."
+Write-Host "Results have been exported to $csvFilePath"
+
+# Pause at the end of the script to allow the user to view the completion message
+Write-Host "Press Enter to exit."
 Read-Host -Prompt "Press Enter to exit"
