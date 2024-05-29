@@ -1,3 +1,7 @@
+#######################################################################################
+# This script is used to hide a specific mailbox from the Global Address List in O365 #
+#######################################################################################
+
 # Prompt for the O365 admin email address
 $AdminAccount = Read-Host "Please enter the O365 Admin email address"
 
