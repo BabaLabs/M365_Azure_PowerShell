@@ -1,3 +1,8 @@
+############################################################################################################
+#   This script is used to generate a Content Search in the Compliance PowerShell Module that will         #
+#        search messages matching criteria provided and then delete all messages from the org              #
+############################################################################################################
+
 # Prompt user for O365 admin account
 $AdminAccount = Read-Host "Please enter the O365 Admin email address"
 
