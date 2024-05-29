@@ -1,3 +1,5 @@
+# This script will iterate through the list of groups/mailboxes specified below, and show all Users that do not have a value for the "Office" field #
+
 # Define the email addresses you want to search, with word wrap for readability
 $emailAddresses = @(
     "group1@example.com",
