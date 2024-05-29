@@ -50,12 +50,13 @@ foreach ($mailbox in $mailboxes) {
     Write-Progress -Activity "Retrieving delegations" -Status "Progress: $progress% Complete" -PercentComplete $progress
 }
 
-# Export the delegations to CSV
-$Delegations | Export-Csv -Path $OutputFilePath -NoTypeInformation
+# Export the results array to a CSV file
+$Result | Export-Csv -Path $csvFilePath -NoTypeInformation
 
-# Disconnect from Exchange Online
-Remove-PSSession $Session
+# Notify the user that the process is complete and the file location
+Write-Host "Process completed."
+Write-Host "Results have been exported to $OutputFilePath"
 
 # Prompt the user to press Enter before closing the window
-Write-Host "Script execution completed. Press Enter to exit."
+Write-Host "Press Enter to exit."
 $null = $Host.UI.RawUI.ReadKey("NoEcho,IncludeKeyDown")
