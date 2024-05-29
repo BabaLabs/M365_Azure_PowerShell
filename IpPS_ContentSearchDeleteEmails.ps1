@@ -10,6 +10,12 @@ $AdminAccount = Read-Host "Please enter the O365 Admin email address"
 Connect-IpPSSession -UserPrincipalName $AdminAccount
 
 try {
+    # Check if the connection was successful
+    if (-not (Get-Module -Name ExchangeOnlineManagement)) {
+        Write-Host "Failed to connect to Exchange Online. Please check the credentials and try again."
+        exit
+    }
+
     # Prompt the user for search criteria
     $SearchName = Read-Host "Enter the Compliance Search name:"
     $SendingEmail = Read-Host "Enter the sender email address:"
@@ -17,9 +23,14 @@ try {
     $StartDate = Read-Host "Enter the start date (MM/DD/YYYY):"
     $EndDate = Read-Host "Enter the end date (MM/DD/YYYY):"
 
-    # Format the dates for the Content Match Query
-    $FormattedStartDate = (Get-Date $StartDate).ToString("yyyy-MM-ddTHH:mm:ss")
-    $FormattedEndDate = (Get-Date $EndDate).ToString("yyyy-MM-ddTHH:mm:ss")
+    # Validate and format the dates
+    try {
+        $FormattedStartDate = (Get-Date $StartDate).ToString("yyyy-MM-ddTHH:mm:ss")
+        $FormattedEndDate = (Get-Date $EndDate).ToString("yyyy-MM-ddTHH:mm:ss")
+    } catch {
+        Write-Host "Invalid date format. Please enter dates in MM/DD/YYYY format."
+        exit
+    }
 
     # Split the subjects string into an array
     $SubjectsArray = $Subjects -split ','
@@ -35,6 +46,9 @@ try {
 
     # Create the Compliance Search
     $Search = New-ComplianceSearch -Name $SearchName -ExchangeLocation All -ContentMatchQuery $ContentMatchQuery
+
+    # Start the search
+    Start-ComplianceSearch -Identity $Search.Identity
 
     # Wait for the search to complete
     do {
@@ -60,13 +74,10 @@ try {
         # Create the Compliance Search Action to delete messages
         $SearchAction = New-ComplianceSearchAction -SearchName $Search.Name -Purge -PurgeType HardDelete
 
-        # Start the Compliance Search Action
-        $Action = Start-ComplianceSearchAction -Identity $SearchAction.Identity
-
         # Monitor the progress of the Compliance Search Action
         $Completed = $false
         while (-not $Completed) {
-            $Action = Get-ComplianceSearchAction -Identity $Action.Identity
+            $Action = Get-ComplianceSearchAction -Identity $SearchAction.Identity
             $Status = $Action.Status
 
             if ($Status -eq "Completed" -or $Status -eq "Failed" -or $Status -eq "PartiallySucceeded") {
@@ -79,8 +90,7 @@ try {
         }
 
         Write-Host "Message deletion has been completed. Please check the results in the Compliance Search portal."
-    }
-    else {
+    } else {
         Write-Host "Message deletion has been canceled."
     }
 }
@@ -88,5 +98,5 @@ catch {
     $ErrorMessage = $_.Exception.Message
     $FailedItem = $_.Exception.ItemName
     Write-Host "An error occurred: $ErrorMessage on $FailedItem"
-    Add-Content -Value "An error occurred: $ErrorMessage on $FailedItem" -Path "C:\temp\errorlog.txt" -Force
+    Add-Content -Value "$(Get-Date) - An error occurred: $ErrorMessage on $FailedItem" -Path "C:\temp\errorlog.txt" -Force
 }
