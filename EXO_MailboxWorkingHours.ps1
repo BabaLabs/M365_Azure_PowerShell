@@ -1,3 +1,8 @@
+#########################################################################
+# This script is used to modify the Working Hours for a mailbox in O365 #
+#########################################################################
+
+#Prompts the user for the O365 Admin account
 $AdminAccount = Read-Host "Please enter the O365 Admin email address"
 
 Connect-ExchangeOnline -UserPrincipalName $AdminAccount
