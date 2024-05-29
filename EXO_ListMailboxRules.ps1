@@ -1,5 +1,9 @@
+#This script is used to list any/all mailbox rules that are applied to a certain M365 mailbox
+
+#Prompts user for Global Admin credentials
 $AdminAccount = Read-Host "Please enter the O365 Admin email address"
 
+#Begins EXO PowerShell session using that account
 Connect-ExchangeOnline -UserPrincipalName $AdminAccount
 
 # Prompt for mailbox email address
