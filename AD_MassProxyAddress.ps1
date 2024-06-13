@@ -1,7 +1,8 @@
-#############################################################################################################
-# This script is used to change the proxyAddress attribute in Active Directory for several accounts at once #
-#            NOTE - THIS CAN ONLY BE RUN WHEN ON THE DOMAIN CONTROLLER - DOES NOT CONNECT TO O365           #
-#############################################################################################################
+###############################################################################################################
+#        NOTE - Please make sure to read through the comments to see what additional actions are required     #
+# This script is used to change the proxyAddress attribute in Active Directory for several accounts at once   #
+#       ALSO NOTE - THIS CAN ONLY BE RUN WHEN ON THE DOMAIN CONTROLLER - DOES NOT CONNECT TO O365             #
+###############################################################################################################
 
 #This imports the ActiveDirectory module to be used in the session
 Import-Module ActiveDirectory
