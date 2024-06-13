@@ -1,6 +1,6 @@
 ############################################################################################################
 #   This PowerShell script connects to Exchange Online, retrieves calendar permissions for all mailboxes,  #
-#   and exports the information to a CSV file.                                                             #
+#                                and exports the information to a CSV file.                                #
 ############################################################################################################
 
 # Import the Exchange Online Management Module
