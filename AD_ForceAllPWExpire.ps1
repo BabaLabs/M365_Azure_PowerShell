@@ -1,3 +1,7 @@
+###################################################################################################
+# This Active Directory script will change all user accounts and disable never expiring passwords #
+###################################################################################################
+
 # Import the required module
 Import-Module ActiveDirectory
 
