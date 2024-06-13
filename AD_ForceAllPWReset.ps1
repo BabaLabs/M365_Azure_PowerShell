@@ -1,3 +1,7 @@
+####################################################################################################
+# This Active Directory script will change all user accounts require password change at next login #
+####################################################################################################
+
 # Import the required module
 Import-Module ActiveDirectory
 
