@@ -1,3 +1,8 @@
+###################################################################################################
+# This AzureAD/EntraID script will collect all attributes currently active/syncing to Azure and   #
+#                                 export the results to a CSV file                                #
+###################################################################################################
+
 # Connect to Azure Active Directory
 Connect-AzureAD
 
