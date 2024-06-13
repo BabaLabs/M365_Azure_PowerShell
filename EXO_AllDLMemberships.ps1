@@ -1,7 +1,7 @@
-############################################################################################################
-#   This PowerShell script connects to Exchange Online, retrieves all distribution groups and their members#
-#   and exports the information to a CSV file.                                                             #
-############################################################################################################
+#############################################################################################################
+#   This PowerShell script connects to Exchange Online, retrieves all distribution groups and their members #
+#                              and exports the information to a CSV file.                                   #
+#############################################################################################################
 
 # Prompt the user for the O365 Admin email address and begin a sign-in request for that account
 $AdminAccount = Read-Host "Please enter the O365 Admin email address"
