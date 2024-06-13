@@ -1,6 +1,6 @@
 ############################################################################################################
 #   This PowerShell script connects to Azure AD, retrieves a user based on the provided ObjectId,          #
-#   and outputs the UserPrincipalName.                                                                     #
+#                                 and outputs the UserPrincipalName.                                       #
 ############################################################################################################
 
 # Import the AzureAD module
