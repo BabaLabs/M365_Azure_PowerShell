@@ -1,7 +1,5 @@
 #This script is used to disable OWA access for all users in a tenant
-#
-# NOTE - THIS SHOULD ONLY BE USED WHEN REQUESTED BY THE CUSTOMER
-#
+
 #Prompts User for O365 Admin credentials
 $AdminAccount = Read-Host "Please enter the O365 Admin email address"
 
