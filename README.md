@@ -9,11 +9,6 @@ This repository contains a collection of PowerShell scripts I've written to stre
 - **Azure AD**: License management, UPN retrieval from GUIDs, and mass operations on user attributes.
 - **Exchange Online**: Manage mailbox settings, delegation, retention policies, and calendar permissions.
 
-## Scripts Included
-- `AD_ForceAllPWExpire.ps1`: Force all Active Directory users' passwords to expire.
-- `EXO_MailboxDelegateFullAccess.ps1`: Assign full mailbox delegation rights.
-- `AzureAD_MassLicenseAssign.ps1`: Mass assign licenses to Azure AD users.
-
 ## Requirements
 - PowerShell 7.0+
 - AzureAD and ExchangeOnline PowerShell modules installed
